@@ -12,7 +12,9 @@ mkdir -p "$BACKUP_DIR"
 HOME_DIR="$HOME"
 
 if [[ "$MODE" == "backup" ]]; then
-    rsync -a --exclude="$BACKUP_DIR" "$HOME_DIR/" "$BACKUP_DIR/home/"
+    rsync -a \
+      --exclude="$(basename "$BACKUP_DIR")" \
+      "$HOME_DIR/" "$BACKUP_DIR/home/"
 
     if command -v conda &> /dev/null; then
         conda env export > "$BACKUP_DIR/conda_env.yml" || true
